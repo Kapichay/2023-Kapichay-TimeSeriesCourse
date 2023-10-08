@@ -142,7 +142,7 @@ class NaiveBestMatchFinder(BestMatchFinder):
             Dictionary containing results of the naive algorithm.
         """
         N, m = self.ts_data.shape
-        
+
         bsf = float("inf")
         
         if (self.excl_zone_denom is None):
@@ -150,7 +150,9 @@ class NaiveBestMatchFinder(BestMatchFinder):
         else:
             excl_zone = int(np.ceil(m / self.excl_zone_denom))
         
-        # INSERT YOUR CODE
+        distance = [DTW_distance(self.ts_data[i], self.query, self.r) for i in range(N)]
+
+        self.bestmatch = self._top_k_match(distance, m, bsf, excl_zone)
 
         return self.bestmatch
 
